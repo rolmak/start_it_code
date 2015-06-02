@@ -1,0 +1,104 @@
+.content
+  .page-options
+    .arrow-right
+
+    / Go to next or previous lesson
+    .lesson-nav
+      .prev-button
+        - if @lesson.prev_lesson
+          = link_to education_program_level_lesson_path(@program_level, @lesson.prev_lesson), id: "navigate_previous_lesson" do
+            %i.icon-left-open-big
+      .title
+        = "#{@lesson.code} #{@lesson.name}"
+      .next-button
+        - if @lesson.next_lesson
+          = link_to education_program_level_lesson_path(@program_level, @lesson.next_lesson), id: "navigate_next_lesson" do
+            %i.icon-right-open-big
+
+  .education-body
+    / Notice and alerts for feedbacks and estimations
+    - if notice
+      .alert.alert-success.education-notice= notice
+    - elsif alert
+      .alert.alert-danger.education-notice= alert
+
+    / Teacher view
+    - if current_user.is_teacher
+      .education-main
+        - if @lesson.plan.present?
+          %h3= t('.plan')
+          = @lesson.plan.html_safe
+
+        - if @lesson.step.present?
+          %h3= t('.step')
+          = @lesson.step.html_safe
+
+        / Teacher can create estimation
+        %h3= t('.estimation')
+        = simple_form_for [@lesson, Education::Estimation.new], url: education_program_level_lesson_estimations_path(@lesson.program_level, @lesson), html: { class: "form-horizontal" } do |f|
+          .lessons-ckeditor
+            = f.input :message, as: :ckeditor, input_html: { ckeditor: {toolbar: 'mini'} }
+            .submit
+              = f.submit t('send'), class: "btn btn-default"
+
+      .lesson-options
+        .feedback-details
+          / Skolotājs var redzēt savu skolēnu atgriezeniskās saites
+          - current_user.program_levels.each do |program_level|
+            - if program_level.id == @program_level.id
+              - pattern_count = 0
+              - if @lesson.patterns.any?
+                %h3= t('.feedbacks')
+                - @lesson.patterns.each do |pattern|
+                  - pattern_count += 1
+                  %p= t('.feedback_count', count: pattern.feedbacks.count, pattern: pattern_count)
+                  = link_to t('.show_feedbacks'), education_program_level_lesson_pattern_feedbacks_path(@lesson.program_level, @lesson, pattern), { :class => "btn btn-default"}
+
+        / Nodarbības materiāli skolotājam
+        - if @lesson.teacher_material.present?
+          %h3= t('.materials')
+          = @lesson.teacher_material.html_safe
+
+      / Pupil view
+    - else
+      .education-main
+        - @lesson.patterns.each do |pattern|
+          / Video for pattern
+          - if pattern.video.present?
+            %h3.pattern-video= t('.video')
+            .video{ id: "video-#{pattern.id}", data: {video: pattern.video} }
+
+          / Sorted assignments for pattern
+          - if pattern.assignments.any?
+            %h3= t('.assignments')
+
+          - pattern.sorted_assignments.each do |assignment|
+            %p.task-name= assignment.name
+            = assignment.description.html_safe
+
+          / Sorted exercises for pattern
+          - if pattern.exercises.any?
+            %h3= t('.exercises')
+
+            - pattern.sorted_exercises.each do |exercise|
+              %p.task-name= exercise.name
+              = exercise.description.html_safe
+
+          / Pupil can create feedback
+          = simple_form_for [pattern, Education::Feedback.new], url: education_program_level_lesson_pattern_feedbacks_path(@lesson.program_level, @lesson, pattern.id), html: { class: "form-horizontal" } do |f|
+            .lessons-ckeditor
+              %h3= t('.send_feedback')
+              = f.input :message, as: :ckeditor, input_html: { ckeditor: {toolbar: 'mini'} , id: "education_feedback_text_#{pattern.id}" }
+              = f.simple_fields_for :additions, [] do |addition|
+                = render 'addition_fields', :f => addition
+              .file-links
+                / faila pievienošana atgriezeniskajai saitei
+                = link_to_add_association t('.add_new_file'), f, :additions, class: "btn btn-default"
+                = f.submit t('send'), class: "btn btn-default"
+
+      .lesson-options
+        - if @lesson.pupil_material.present?
+          %h3= t('.materials')
+          = @lesson.pupil_material.html_safe
+
+    .footer

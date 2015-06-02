@@ -1,0 +1,21 @@
+.level
+  = simple_form_for @level, url: url, html: { class: "form-horizontal" } do |f|
+    = render 'admin/education/errors', object: @level
+
+    .form-group
+      .col-lg-6
+        = f.input :name
+        = f.input :sequence
+
+    / Level can be added to program
+    .form-group
+      .col-lg-6
+        = f.label :program_id
+        .col-lg-4.programs
+          = f.collection_check_boxes :program_ids, ::Education::Program.all, :id, :name
+
+    %hr
+    .form-group
+      .col-lg-12
+        = f.submit nil, class: "btn btn-primary"
+        = link_to t('back'), admin_education_levels_path, class: "btn btn-default"

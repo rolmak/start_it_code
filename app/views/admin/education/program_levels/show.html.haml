@@ -1,0 +1,34 @@
+%h2.main
+  = "#{@program.name} - #{@level.name}"
+
+/ Add new lesson to level
+.page-options
+  = link_to t('.add_lesson'), new_admin_education_program_level_lesson_path(params[:id]), class: "btn btn-primary"
+
+%hr
+  / List with present lessons and their options
+- if @lessons.present?
+  = table do
+    %tr
+      %th= t('.lesson_name')
+      %th
+      %th
+      %th
+      %th
+      %th
+      - @sorted_lessons.each do |lesson|
+        %tr
+          %td= lesson.name
+          %td= link_to t('.preview'), education_program_level_lesson_path(lesson.program_level, lesson)
+          %td= link_to t('.estimations'), admin_education_program_level_lesson_estimations_path(lesson.program_level, lesson)
+          %td= link_to t("show"), admin_education_program_level_lesson_path(lesson.program_level, lesson)
+          %td= link_to t("edit"), edit_admin_education_program_level_lesson_path(lesson.program_level, lesson)
+          %td= link_to t("destroy"), admin_education_program_level_lesson_path(lesson.program_level, lesson), method: :delete, data: { confirm: t("are_you_sure") }
+  / Message for empty lesson list
+- else
+  %h3= t('.empty_lesson_list')
+  %hr
+
+.form-group
+  .col-lg-12
+    = link_to t('back'), admin_education_program_path(@program), class: "btn btn-default"

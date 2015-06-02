@@ -1,0 +1,19 @@
+= simple_form_for ([@lesson.program_level, @lesson]), url: url, html: { class: "form-horizontal" } do |f|
+  = render 'admin/education/errors', object: @lesson
+
+  %hr
+  .form-group
+    .col-lg-10
+      = f.input :name
+      = f.input :code, hint: "formāts: '1.01 (klase.nodarbības numurs)'"
+      = f.input :sequence
+      = f.input :plan, as: :ckeditor, input_html: { ckeditor: {toolbar: 'basic'} }
+      = f.input :step, as: :ckeditor, input_html: { ckeditor: {toolbar: 'basic'} }
+      = f.input :teacher_material, as: :ckeditor, input_html: { ckeditor: {toolbar: 'basic'} }
+      = f.input :pupil_material, as: :ckeditor, input_html: { ckeditor: {toolbar: 'basic'} }
+
+  %hr
+  .form-group
+    .col-lg-12
+      = f.submit nil, class: "btn btn-primary"
+      = link_to t('back'), admin_education_program_level_path(params[:program_level_id]), class: "btn btn-default"

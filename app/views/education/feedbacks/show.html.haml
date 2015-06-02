@@ -1,0 +1,25 @@
+.content
+  .page-options
+    .arrow-right
+    .lesson-nav
+      #title
+        = "#{@lesson.code} #{@lesson.name}"
+  .education-body.small
+    .education-main.small
+      / Skolotājs skats uz skolēna atgriezenisko saiti
+      %h3= t('.user')
+      %p= "#{@user.to_s}"
+      %h3= t('.message')
+      %p= @feedback.message.html_safe
+      / Ja atgriezeniskajai saitei ir pievienots fails, tad redz materiālu sadaļu
+      - if @feedback.additions.present?
+        %h3= t('.material')
+        - @feedback.additions.each do |addition|
+          %p= link_to addition.name, addition.file_url, target: '_blank', class: "file"
+
+      %br
+      .form-group
+        .col-lg-12
+          = link_to t('back'), education_program_level_lesson_pattern_feedbacks_path(@feedback.pattern.lesson.program_level, @feedback.pattern.lesson, @feedback.pattern), class: "btn btn-default"
+
+    .footer

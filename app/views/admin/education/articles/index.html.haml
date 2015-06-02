@@ -1,0 +1,50 @@
+%h2.main= t('.page_title')
+
+/ Add new article
+.page-options
+  = link_to t('.add_article'), new_admin_education_article_path, class: "btn btn-primary"
+
+%hr
+  / Message for empty article list
+- if @articles.empty? && @top_story_articles.empty?
+  %h3= t('.empty_article')
+  / Sorted Articles by top_story, published, published_at, created_at
+- else
+  = table do
+    %tr
+      %th.column-name= t('.title')
+      %th.article-column-description= t('.text')
+      %th= t('.is_top_story')
+      %th= t('.is_published')
+      %th= t('.publish_date')
+      %th
+      %th
+    - @top_story_articles.each do |article|
+      %tr
+        %td= article.title
+        %td= article.description.html_safe
+        %td= t('.is_true')
+        %td
+          - if article.published
+            = t('.is_true')
+            %td= article.published_at
+          - else
+            = t('.not_true')
+            %td
+        %td.column-option= link_to t('edit'), edit_admin_education_article_path(article)
+        %td.column-option= link_to t('destroy'), admin_education_article_path(article), method: :delete, data: { confirm: 'Are you sure?' }
+
+    - @articles.each do |article|
+      %tr
+        %td= article.title
+        %td= article.description.html_safe
+        %td= t('.not_true')
+        %td
+          - if article.published
+            = t('.is_true')
+            %td= article.published_at
+          - else
+            = t('.not_true')
+            %td
+        %td.column-option= link_to t('edit'), edit_admin_education_article_path(article)
+        %td.column-option= link_to t('destroy'), admin_education_article_path(article), method: :delete, data: { confirm: 'Are you sure?' }

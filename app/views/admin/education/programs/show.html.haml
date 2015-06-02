@@ -1,0 +1,18 @@
+%h2.main
+  =@program.name
+
+/ List with programs levels
+%hr
+  = table do
+    %tr
+      %th= t('.level_name')
+      %th
+
+    - @sorted_levels.each do |program_level|
+      %tr
+        %td= program_level.level.name
+        %td= link_to t("show"), admin_education_program_level_path(program_level)
+
+  .form-group
+    .col-lg-12
+      = link_to t('back'), admin_education_programs_path, class: "btn btn-default"

@@ -1,0 +1,20 @@
+%h2.main= t('.title')
+
+/ Add new level
+.page-options
+  = link_to t('.add_level'), new_admin_education_level_path, class: "btn btn-primary"
+
+%hr
+  = table do
+    %tr
+      %th= t('.name')
+      %th= t('.sequence')
+      %th
+      %th
+
+    - @levels.each do |level|
+      %tr
+        %td= level.name
+        %td= level.sequence
+        %td= link_to t("edit"), edit_admin_education_level_path(level)
+        %td= link_to t("destroy"), admin_education_level_path(level), method: :delete, data: { confirm: t("are_you_sure") }

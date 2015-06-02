@@ -1,0 +1,55 @@
+%html
+  %head
+    %title Start IT
+    %meta{ content: 'width=device-width, initial-scale=1', name: 'viewport' }
+    / CKeditor
+    = render 'admin/ckeditor_basepath'
+    = stylesheet_link_tag "education", media: "all"
+    = javascript_include_tag "portal"
+    = javascript_include_tag "education"
+    = csrf_meta_tags
+  %body{ id: "#{controller_name}_#{action_name}".dasherize }
+    .education
+      .header
+        .education-logo
+          = link_to image_tag("portal_logo.png"), main_app.education_path
+        .education-top
+          - if user_signed_in?
+            / Skolotājs: Vārds Uzvārds
+            - if current_user.is_teacher
+              .teacher
+                %p
+                  = "#{t('.teacher')}:"
+                  = current_user.first_name
+                  = current_user.last_name
+                  = "(#{link_to t('exit'), main_app.destroy_user_session_path, method: :delete, :class => 'navbar-link'})".html_safe
+            - else
+              / Skolēns: Vārds Uzvārds
+              .pupil
+                %p
+                  = "#{t('.pupil')}:"
+                  = current_user.first_name
+                  = current_user.last_name
+                  = "(#{link_to t('exit'), main_app.destroy_user_session_path, method: :delete, :class => 'navbar-link'})".html_safe
+
+      .content-wrapper
+        .menu
+          .menu-title
+            %h4= t('.lessons')
+          .arrow-down
+          / Menu with levels and lessons
+          #accordion.panel-group{:role => "tablist", "aria-multiselectable" => "true"}
+            - @programs.each do |program|
+              - program.sorted_levels.each do |level|
+                .panel.panel-default
+                  .panel-heading{:role => "tab", id: "heading-#{level.id}"}
+                    %h4.panel-title
+                      %a{"aria-controls" => "collapse-#{level.id}", "aria-expanded" => "false", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapse-#{level.id}"}
+                        #{level.name}
+                    .panel-collapse.collapse{"aria-labelledby" => "heading-#{level.id}", :role => "tabpanel", id: "collapse-#{level.id}"}
+                      .second-arrow-down
+                      - sorted_lessons = level.program_levels.first.lessons.order("sequence ASC")
+                      - sorted_lessons.each do |lesson|
+                        .panel-body= link_to "#{lesson.code}", main_app.education_program_level_lesson_path(level.program_levels.first, lesson)
+
+        =yield

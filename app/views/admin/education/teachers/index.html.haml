@@ -1,0 +1,31 @@
+.users
+  %h2= "#{t('.teachers')} (#{@teacher_count})"
+
+  / List of all teachers with option to add them program level
+  .user-table
+    %table.table.table-bordered.table-striped
+      %tr
+        %th= t('.progress')
+        %th= t('.email')
+        %th= t('.first_name')
+        %th= t('.last_name')
+        %th= t('.school')
+        %th= t('.phone')
+        %th= t('.teacher')
+        %th= t('.admin')
+        %th= t('.last_sign_in')
+        %th= t('.add_level')
+      - @teachers.each do |teacher|
+        %tr
+          %td= "#{(100 * teacher.badges.for_videos.count / 40)} %"
+          %td= teacher.email
+          %td= teacher.first_name
+          %td= teacher.last_name
+          %td= teacher.school
+          %td= teacher.phone
+          %td= boolean_atrribute(teacher.is_teacher)
+          %td= boolean_atrribute(teacher.is_admin)
+          %td= l(teacher.last_sign_in_at, format: :short) if teacher.last_sign_in_at
+          %td= link_to t('add'), edit_admin_education_teacher_path(teacher)
+
+= paginate @teachers

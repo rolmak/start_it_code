@@ -1,0 +1,81 @@
+/* CKeditor label and text field resizing */
+.lessons-ckeditor {
+  label.ckeditor {
+    text-align: left;
+    width: 11%;
+  }
+  .col-lg-9 {
+    width: 89%;
+  }
+}
+
+/*  */
+.education-body {
+  background-color: white;
+  height: auto;
+  width: 100%;
+  display: inline-block;
+  .education-main {
+    background-color: white;
+    width: 70%;
+    padding: 30px;
+    float: left;
+    h3 {
+      margin: 0;
+      padding-top: 10px;
+      padding-bottom: 20px;
+    }
+    h3.pattern-video {
+      padding-bottom: 0;
+    }
+    p:last-child {
+      margin: 0;
+    }
+  }
+  .lesson-options {
+    background-color: white;
+    float: right;
+    width: 30%;
+    height: auto;
+    padding: 30px;
+  }
+  .alert {
+    text-align: center;
+    padding: 10px;
+    margin: 15px;
+    margin-bottom: 0;
+  }
+}
+
+.small {
+  height: 100%;
+}
+
+.feedback-details {
+  max-width: 100%;
+  p {
+    margin: 10px 0;
+  }
+}
+
+.feedback-list {
+  p {
+    font-size: 16px;
+    a {
+      padding: 0 10px;
+    }
+  }
+}
+
+.footer {
+  background-color: #505050;
+  clear: both;
+  position: relative;
+  z-index: 10;
+  height: 5em;
+}
+
+.task-name {
+  font-weight: bold;
+  font-size: 15px;
+}

@@ -1,0 +1,28 @@
+/* CSS triangles for education menu */
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid #F04D52;
+  margin-left: 80px;
+}
+
+.second-arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid #505050;
+  display: inline-block;
+}
+
+.arrow-right {
+  width: 5%;
+  height: 0;
+  border-style: solid;
+  border-width: 15px 0 15px 20px;
+  border-color: transparent transparent transparent #F04D52;
+  float: left;
+  margin-top: 5px;
+}

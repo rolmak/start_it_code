@@ -1,0 +1,16 @@
+= simple_form_for @article, url: url, html: { class: "form-horizontal" } do |f|
+  = render 'admin/education/errors', object: @article
+
+  %hr
+  .form-group
+    .col-lg-10
+      = f.input :title
+      = f.input :description, as: :ckeditor, input_html: { ckeditor: {toolbar: 'basic'} }
+      = f.input :published, as: :boolean
+      = f.input :top_story, as: :boolean
+
+  %hr
+  .form-group
+    .col-lg-12
+      = f.submit nil, class: "btn btn-primary"
+      = link_to t('back'), admin_education_articles_path, class: "btn btn-default"

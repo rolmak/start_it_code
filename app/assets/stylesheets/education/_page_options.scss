@@ -1,0 +1,37 @@
+/* Lesson navigation */
+.page-options {
+  text-align: center;
+  background-color: #505050;
+  height: 40px;
+  color: white;
+  width: 100%;
+  margin: 0;
+  .lesson-nav {
+    width: 60%;
+    height: 100%;
+    font-size: 24px;
+    padding-top: 3px;
+    .title {
+      display: inline-block;
+      height: auto;
+    }
+    .prev-button {
+      display: inline-block;
+      height: auto;
+      padding-right: 20px;
+      a {
+        text-decoration: none;
+        color: white;
+      }
+    }
+    .next-button {
+      display: inline-block;
+      height: auto;
+      padding-left: 20px;
+      a {
+        text-decoration: none;
+        color: white;
+      }
+    }
+  }
+}

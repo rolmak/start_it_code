@@ -1,0 +1,52 @@
+.page-options
+  / Options for new assignments and exercises
+  = link_to t('.add_assignment'), new_admin_education_program_level_lesson_pattern_assignment_path(@pattern.lesson.program_level, @pattern.lesson, @pattern), class: "btn btn-primary"
+  = link_to t('.add_exercise'), new_admin_education_program_level_lesson_pattern_exercise_path(@pattern.lesson.program_level, @pattern.lesson, @pattern), class: "btn btn-primary"
+
+= simple_form_for ([@pattern.lesson, @pattern]), url: admin_education_program_level_lesson_pattern_path, html: { class: "form-horizontal" } do |f|
+  = render 'admin/education/errors', object: @pattern
+
+  %h2.main
+    = @pattern.name
+  %hr
+    / Existing assignments and exercises sorted by sequence
+  - if @pattern.exercises.present? || @pattern.assignments.present?
+    - if @pattern.assignments.present?
+      .assignment_selector
+        = table do
+          %tr
+            %th.column-name= t('.assignments')
+            %th.column-description= t('.description')
+            %th
+            %th
+          - @sorted_assignments.each do |assignment|
+            %tr
+              %td= assignment.name
+              %td= assignment.description.html_safe
+              %td.column-option= link_to t("edit"), edit_admin_education_program_level_lesson_pattern_assignment_path(@pattern.lesson.program_level, @pattern.lesson, @pattern, assignment)
+              %td.column-option= link_to t("destroy"), admin_education_program_level_lesson_pattern_assignment_path(@pattern.lesson.program_level, @pattern.lesson, @pattern, assignment), method: :delete, data: { confirm: t("are_you_sure") }
+
+      %hr
+
+    - if @pattern.exercises.present?
+      = table do
+        .exercise_selector
+          %tr
+            %th.column-name= t('.exercises')
+            %th.column-description= t('.description')
+            %th
+            %th
+          - @sorted_exercises.each do |exercise|
+            %tr
+              %td= exercise.name
+              %td= exercise.description.html_safe
+              %td.column-option= link_to t("edit"), edit_admin_education_program_level_lesson_pattern_exercise_path(@pattern.lesson.program_level, @pattern.lesson, @pattern, exercise)
+              %td.column-option= link_to t("destroy"), admin_education_program_level_lesson_pattern_exercise_path(@pattern.lesson.program_level, @pattern.lesson, @pattern, exercise), method: :delete, data: { confirm: t("are_you_sure") }
+    / Message if there are no assignments and exercises
+  - else
+    %h3= t('.empty_pattern')
+    %hr
+
+  .form-group
+    .col-lg-12
+      = link_to t('back'), admin_education_program_level_lesson_path(@pattern.lesson.program_level, @pattern.lesson), class: "btn btn-default"

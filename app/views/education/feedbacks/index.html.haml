@@ -1,0 +1,18 @@
+.content
+  .page-options
+    .arrow-right
+    .lesson-nav
+      #title
+        = "#{@lesson.code} #{@lesson.name}"
+
+  - current_user.teachable_classrooms.each do |classroom|
+    - if @pattern.feedbacks.for_users(classroom.users).count < 20
+      .education-body.small
+        .education-main.small
+          = render 'all_feedbacks'
+      .footer
+    - else
+      .education-body
+        .education-main
+          = render 'all_feedbacks'
+      .footer

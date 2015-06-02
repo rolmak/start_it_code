@@ -1,0 +1,27 @@
+.programs
+  = simple_form_for @program, url: url, html: { class: "form-horizontal" } do |f|
+    = render 'admin/education/errors', object: @program
+
+    .form-group
+      .col-lg-6
+        = f.input :name
+
+    / Shows list of levels owned by program in edit
+    - if params[:id] != nil
+      %hr
+      %ul.nav.nav-tabs
+        %li.active= link_to t('.levels'), "#levels", data: { toggle: "tab" }
+
+      %br
+      = table do
+        %tr
+          %th= t('.level_name')
+          - @sorted_levels.each do |program_level|
+            %tr
+              %td= program_level.level.name
+
+    %hr
+    .form-group
+      .col-lg-12
+        = f.submit nil, class: "btn btn-primary"
+        = link_to t('back'), admin_education_programs_path, class: "btn btn-default"

@@ -1,0 +1,24 @@
+%h2.main= "#{t('.estimations')} #{@program_level.level.name} - #{@lesson.name}"
+%hr
+  / Admin can see all lesson estimations and delete them
+  - if @lesson.estimations.any?
+    = table do
+      %tr
+        %th.estimations-user= t('.user')
+        %th.estimations-text= t('.text')
+        %th
+      - @lesson.estimations.each do |estimation|
+        %tr
+          %td
+            = User.find(estimation.user_id).first_name
+            = User.find(estimation.user_id).last_name
+          %td= estimation.message.html_safe
+          %td.column-option= link_to t("destroy"), admin_education_program_level_lesson_estimation_path(@lesson.program_level, @lesson, estimation), method: :delete, data: { confirm: t("are_you_sure") }
+    / Message for empty estimation list
+  - else
+    %h3= t('.empty_estimation_list')
+    %br
+
+.form-group
+  .col-lg-12
+    = link_to t('back'), admin_education_program_level_path(@lesson.program_level), class: "btn btn-default"

@@ -1,0 +1,14 @@
+= simple_form_for ([@assignment.pattern, @assignment]), url: url, html: { class: "form-horizontal" } do |f|
+  = render 'admin/education/errors', object: @assignment
+
+  .form-group
+    .col-lg-10
+      = f.input :name
+      = f.input :sequence
+      = f.input :description, as: :ckeditor, input_html: { ckeditor: {toolbar: 'basic'} }
+
+  %hr
+  .form-group
+    .col-lg-12
+      = f.submit nil, class: "btn btn-primary"
+      = link_to t('back'), admin_education_program_level_lesson_pattern_path(@assignment.pattern.lesson.program_level, @assignment.pattern.lesson, @assignment.pattern), class: "btn btn-default"

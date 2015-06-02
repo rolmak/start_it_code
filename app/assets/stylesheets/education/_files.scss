@@ -1,0 +1,51 @@
+/* File attachment adding field */
+  .file-attachment {
+    background-color: #F5F5F5;
+    height: auto;
+    margin-bottom: -15px;
+
+    .form-group{
+      padding: 10px;
+      width: 800px;
+      display: block;
+
+      label.string.required.control-label.col-lg-3 {
+        width: 16%;
+        text-align: left;
+      }
+
+      label.string.optional.control-label.col-lg-3 {
+        width: 15%;
+        text-align: left;
+      }
+      .col-lg-9 {
+        width: 450px;
+        input[type="text"] {
+          width: 70%;
+        }
+      }
+    }
+
+    input[type="file"] {
+      margin-left: 470px;
+      margin-top: -54px;
+      position: absolute;
+    }
+  }
+
+.nested-fields.well.well-sm{
+  margin-top: 20px;
+}
+
+.file-links {
+  margin-top: 20px;
+}
+
+a#close-button.btn.btn-danger.remove_fields.dynamic{
+  padding: 0px 4px;
+  font-size: 12px;
+  margin-top: -57px;
+  float: right;
+  top: 0;
+  right: 0;
+}

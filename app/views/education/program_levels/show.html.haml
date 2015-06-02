@@ -1,0 +1,9 @@
+.content.lesson
+  / Sakārtots klašu nodarbību saraksts pēc secības(sequence)
+  %table.lesson-list
+    %tbody
+      %tr
+        %th= t('.lesson')
+        - @sorted_lessons.each do |lesson|
+          %tr
+            %td= link_to "#{lesson.name}", education_program_level_lesson_path(lesson.program_level, lesson)

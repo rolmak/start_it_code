@@ -1,0 +1,14 @@
+= simple_form_for ([@pattern.lesson, @pattern]), url: url, html: { class: "form-horizontal" } do |f|
+  = render 'admin/education/errors', object: @pattern
+
+  .form-group
+    .col-lg-10
+      = f.input :name
+      = f.input :sequence
+      = f.input :video
+
+  %hr
+  .form-group
+    .col-lg-12
+      = f.submit nil, class: "btn btn-primary"
+      = link_to t('back'), admin_education_program_level_lesson_path(@lesson.program_level, @lesson), class: "btn btn-default"

@@ -1,0 +1,21 @@
+%h2.main= t('.title')
+
+/ Add new program
+.page-options
+  = link_to t('.add_program'), new_admin_education_program_path, class: "btn btn-primary"
+
+/ Program list with their options
+%hr
+  = table do
+    %tr
+      %th= t('.program_name')
+      %th
+      %th
+      %th
+
+    - @programs.each do |program|
+      %tr
+        %td= program.name
+        %td= link_to t("show"), admin_education_program_path(program)
+        %td= link_to t("edit"), edit_admin_education_program_path(program)
+        %td= link_to t("destroy"), admin_education_program_path(program), method: :delete, data: { confirm: t("are_you_sure") }

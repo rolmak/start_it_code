@@ -1,0 +1,6 @@
+.nested-fields.well.well-sm
+  / Add file
+  .file-attachment
+    = f.input :name
+    = f.file_field :file, id: 'addition_file'
+  = link_to_remove_association "X", f, class: "btn btn-danger", id: "close-button"

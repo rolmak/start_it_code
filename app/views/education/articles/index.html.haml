@@ -1,0 +1,18 @@
+.content.lesson
+  .page-options
+    .lesson-nav
+      #title
+        = t('.articles')
+  .education-body.small
+    .education-main.small
+      / tabula ar visiem jaunumie, izceltie sākumā
+      - @top_story_articles.each do |article|
+        - if article.published
+          %h4= article.title
+          %p= article.description.html_safe
+
+      - @articles.each do |article|
+        - if article.published
+          %h4= article.title
+          %p= article.description.html_safe
+    .footer

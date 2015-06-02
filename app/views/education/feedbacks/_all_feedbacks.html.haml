@@ -1,0 +1,12 @@
+%h3= t('.feedbacks')
+/ Skolotājs var redzēt sarakstu ar savas klases skolēnu atgriezeniskājām saitēm
+- current_user.teachable_classrooms.each do |classroom|
+  - @pattern.feedbacks.for_users(classroom.users).each do |feedback|
+    .feedback-list
+      %p
+        = feedback.user.to_s
+        = link_to t('show'), education_program_level_lesson_pattern_feedback_path(@program_level, @lesson, @pattern, feedback)
+%br
+.form-group
+  .col-lg-12
+    = link_to t('back'), education_program_level_lesson_path(@program_level, @lesson), class: "btn btn-default"

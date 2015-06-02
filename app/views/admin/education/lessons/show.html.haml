@@ -1,0 +1,52 @@
+/ Add new pattern for lesson
+.page-options
+  = link_to t('.add_pattern'), new_admin_education_program_level_lesson_pattern_path(@lesson.program_level, @lesson), class: "btn btn-primary"
+
+= simple_form_for ([@lesson.program_level, @lesson]), url: admin_education_program_level_lesson_path, html: { class: "form-horizontal" } do |f|
+  = render 'admin/education/errors', object: @lesson
+
+  %h2.main
+    = @lesson.name
+
+  / All details for lesson
+  %hr
+    = table do
+      %tr
+        %th.column-name= t('.title')
+        %th
+      %tr
+        %td= t('.sequence')
+        %td= @lesson.sequence
+      %tr
+        %td= t('.plan')
+        %td= @lesson.plan.html_safe
+      %tr
+        %td= t('.step')
+        %td= @lesson.step.html_safe
+      %tr
+        %td= t('.teacher_materials')
+        %td= @lesson.teacher_material.html_safe
+      %tr
+        %td= t('.pupil_materials')
+        %td= @lesson.pupil_material.html_safe
+
+  / Sorted lesson pattern list by sequence and their options
+  - if @lesson.patterns.present?
+    %hr
+      = table do
+        %tr
+          %th.column-name= t('.patterns')
+          %th
+          %th
+          %th
+        - @sorted_patterns.each do |pattern|
+          %tr
+            %td= pattern.name
+            %td= link_to t("show"), admin_education_program_level_lesson_pattern_path(@lesson.program_level, @lesson, pattern)
+            %td= link_to t("edit"), edit_admin_education_program_level_lesson_pattern_path(@lesson.program_level, @lesson, pattern)
+            %td= link_to t("destroy"), admin_education_program_level_lesson_pattern_path(@lesson.program_level, @lesson, pattern), method: :delete, data: { confirm: t("are_you_sure") }
+
+
+  .form-group
+    .col-lg-12
+      = link_to t('back'), admin_education_program_level_path(@lesson.program_level), class: "btn btn-default"

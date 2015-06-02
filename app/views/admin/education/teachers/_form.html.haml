@@ -1,0 +1,16 @@
+.level
+  = simple_form_for @teacher, url: url, html: { class: "form-horizontal" } do |f|
+    = render 'admin/education/errors', object: @teacher
+
+    / Add programs level to teacher, to see feedbacks
+    .form-group
+      .col-lg-10
+        = f.label :program_level_id
+        .col-lg-4.programs
+          = f.collection_check_boxes :program_level_ids, @all_program_levels, :id, :name
+
+    %hr
+    .form-group
+      .col-lg-12
+        = f.submit nil, class: "btn btn-primary"
+        = link_to t('back'), admin_education_teachers_path, class: "btn btn-default"
